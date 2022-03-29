@@ -27,14 +27,47 @@ import {
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen'
 
-import * as D from './src/data'
 
-const person = D.createRandomPerson()
+// 클래스형, 함수형 컴포넌트의 적용
+import ClassComponent from './src/screens/ClassComponent'
+import ArrowComponent from './src/screens/ArrowComponents'
+
+// 속성 전달하기
+import Person from './src/screens/Person'
+import * as D from './src/data'
+const personParents = D.createRandomPerson()
+
+// export default function App() {
+//   return (
+//     <SafeAreaView>
+//       <ClassComponent/>
+//       <ArrowComponent/>
+//       <Person person = {personParents} />
+//     </SafeAreaView>
+//   )
+// }
+
+
+// scrollview 적용해보기
+const people = D.makeArray(100).map(D.createRandomPerson)
 
 export default function App() {
+
+  const children = people.map((person) => (
+
+    // 모든 자식 컴포넌트는 구분할수있는 키값이 필요하다.
+    <Person key={person.id} person={person}/>
+
+  ))
+
+
   return (
     <SafeAreaView>
-      <Text>{JSON.stringify(person, null, 2)}</Text>
+      <ScrollView>
+
+        {children}
+
+      </ScrollView>
     </SafeAreaView>
   )
 }
